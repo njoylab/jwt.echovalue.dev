@@ -239,7 +239,8 @@
 
   function setCopyState() {
     const ready = Boolean(tokenEl.value.trim());
-    copyBtn.classList.toggle("primary", ready);
+    copyBtn.classList.toggle("btn-primary", ready);
+    copyBtn.classList.toggle("btn-secondary", !ready);
     copyBtn.setAttribute("aria-disabled", ready ? "false" : "true");
   }
 
@@ -693,23 +694,6 @@
   document.querySelectorAll("[data-part]").forEach((button) => {
     button.addEventListener("click", () => selectPart(Number(button.dataset.part)));
   });
-
-  const menu = document.getElementById("menu");
-  const rail = document.getElementById("rail");
-  const inspect = document.getElementById("inspect");
-  if (menu && rail) {
-    menu.addEventListener("click", () => {
-      const open = rail.classList.toggle("open");
-      menu.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-  }
-  if (inspect) {
-    inspect.addEventListener("click", () => {
-      tokenEl.focus();
-      if (rail) rail.classList.remove("open");
-      if (menu) menu.setAttribute("aria-expanded", "false");
-    });
-  }
 
   loadExample().catch(() => {
     setFinding("Web Crypto non è disponibile in questa pagina.", "", "");

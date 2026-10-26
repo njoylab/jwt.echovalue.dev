@@ -36,5 +36,5 @@ Confronta HMAC con Node e fa un giro di firma, verifica e token alterato per gli
 
 I file in `fonts/` sono i subset latin di Fontsource 5.2.5. Le licenze valgono solo per i font.
 
-- Public Sans, per l'interfaccia. SIL Open Font License 1.1, con le modifiche GSA in pubblico dominio. Testo in `fonts/public-sans-LICENSE.md`.
-- IBM Plex Mono, per token, JSON e chiavi. SIL Open Font License 1.1. Nome riservato: Plex. Testo in `fonts/ibm-plex-mono-LICENSE.txt`.
+- Inter, per l'interfaccia. SIL Open Font License 1.1. Testo in `fonts/inter-LICENSE.txt`.
+- JetBrains Mono, per token, JSON e chiavi. SIL Open Font License 1.1. Testo in `fonts/jetbrains-mono-LICENSE.txt`.
