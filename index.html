@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; connect-src 'none'">
+  <title>Sigillo</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+  <div class="app">
+    <nav class="rail" id="rail" aria-label="Sigillo">
+      <div class="mark">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M3 7h18" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 12h12" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".55"/>
+          <path class="mark-seal" d="M3 17h8" fill="none" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <button type="button" class="nav-item" id="inspect" aria-current="page" aria-label="Ispeziona">
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <rect x="2.5" y="2.5" width="11" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M4.5 11.5h4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </button>
+    </nav>
+
+    <div class="main">
+      <header class="topbar">
+        <button type="button" class="menu-toggle" id="menu" aria-expanded="false" aria-label="Apri il menu">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </button>
+        <span class="topbar-name">Sigillo</span>
+        <span class="topbar-scope">Questa scheda</span>
+      </header>
+
+      <div class="canvas">
+        <div class="title-row">
+          <div class="title-copy">
+            <p class="product">Sigillo</p>
+            <h1 id="screen-title">Token</h1>
+            <p class="sub" id="finding" aria-live="polite">Incolla un JWT. Il testo resta in questa scheda.</p>
+          </div>
+          <div class="title-actions">
+            <p class="stamp">Niente esce da questa scheda</p>
+            <button type="button" class="btn ghost" id="clear">Svuota</button>
+            <button type="button" class="btn" id="example">Token di esempio</button>
+            <button type="button" class="btn" id="copy" aria-disabled="true">Copia token</button>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="work">
+            <section class="panel token" id="token-panel" aria-labelledby="token-heading">
+              <header>
+                <h2 id="token-heading">Token</h2>
+              </header>
+              <div class="parts" role="tablist" aria-label="Parti del token">
+                <button type="button" role="tab" data-part="0" aria-selected="true">
+                  <span class="part-label">Header</span>
+                  <span class="part-count num" data-count>0</span>
+                </button>
+                <button type="button" role="tab" data-part="1" aria-selected="false">
+                  <span class="part-label">Payload</span>
+                  <span class="part-count num" data-count>0</span>
+                </button>
+                <button type="button" role="tab" data-part="2" aria-selected="false">
+                  <span class="part-label">Firma</span>
+                  <span class="part-count num" data-count>0</span>
+                </button>
+              </div>
+              <div class="shares" id="shares" aria-hidden="true">
+                <span data-share="0"></span>
+                <span data-share="1"></span>
+                <span data-share="2"></span>
+              </div>
+              <div class="codebox">
+                <pre class="paint" id="token-paint" aria-hidden="true"></pre>
+                <textarea id="token" class="editor" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Incolla un JWT" aria-label="Token codificato"></textarea>
+              </div>
+              <p class="hint bad" id="token-note" hidden></p>
+            </section>
+
+            <div class="stack">
+              <section class="panel head-panel" aria-labelledby="header-heading">
+                <header>
+                  <h2 id="header-heading">Header</h2>
+                </header>
+                <div class="codebox short">
+                  <pre class="paint" id="header-paint" aria-hidden="true"></pre>
+                  <textarea id="header" class="editor" spellcheck="false" autocomplete="off" aria-label="Header in JSON"></textarea>
+                </div>
+                <p class="hint bad" id="header-note" hidden></p>
+              </section>
+
+              <section class="panel payload-panel" aria-labelledby="payload-heading">
+                <header>
+                  <h2 id="payload-heading">Payload</h2>
+                </header>
+                <div class="codebox">
+                  <pre class="paint" id="payload-paint" aria-hidden="true"></pre>
+                  <textarea id="payload" class="editor" spellcheck="false" autocomplete="off" aria-label="Payload in JSON"></textarea>
+                </div>
+                <p class="hint bad" id="payload-note" hidden></p>
+              </section>
+            </div>
+          </div>
+
+          <div class="evidence">
+            <section class="panel claims" aria-labelledby="claims-heading">
+              <header>
+                <h2 id="claims-heading">Claim registrati</h2>
+              </header>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Claim</th>
+                      <th>Valore</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-claim="iss"><th scope="row">Emittente <code>iss</code></th><td><span class="reading missing">&mdash;</span><span class="when" hidden></span></td></tr>
+                    <tr data-claim="sub"><th scope="row">Soggetto <code>sub</code></th><td><span class="reading missing">&mdash;</span><span class="when" hidden></span></td></tr>
+                    <tr data-claim="aud"><th scope="row">Destinatario <code>aud</code></th><td><span class="reading missing">&mdash;</span><span class="when" hidden></span></td></tr>
+                    <tr data-claim="exp"><th scope="row">Scadenza <code>exp</code></th><td><span class="reading missing">&mdash;</span><span class="when" hidden></span></td></tr>
+                    <tr data-claim="nbf"><th scope="row">Valido dal <code>nbf</code></th><td><span class="reading missing">&mdash;</span><span class="when" hidden></span></td></tr>
+                    <tr data-claim="iat"><th scope="row">Emesso <code>iat</code></th><td><span class="reading missing">&mdash;</span><span class="when" hidden></span></td></tr>
+                    <tr data-claim="jti"><th scope="row">Id <code>jti</code></th><td><span class="reading missing">&mdash;</span><span class="when" hidden></span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="hint">Gli altri claim restano nel payload.</p>
+            </section>
+
+            <section class="panel sign" id="firma" aria-labelledby="sign-heading">
+              <header>
+                <h2 id="sign-heading">Firma</h2>
+                <span class="pill" id="pill" hidden></span>
+              </header>
+              <div class="field">
+                <label for="alg">Algoritmo</label>
+                <div class="select-wrap">
+                  <select id="alg" class="input" aria-label="Algoritmo"></select>
+                  <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                    <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="hmac-fields">
+                <div class="field">
+                  <label for="secret">Segreto</label>
+                  <input id="secret" class="input mono" autocomplete="off" spellcheck="false" autocapitalize="off">
+                </div>
+                <label class="check">
+                  <input type="checkbox" id="b64">
+                  <span class="check-text">Il segreto è Base64</span>
+                </label>
+              </div>
+              <div id="pem-fields" hidden>
+                <div class="field">
+                  <label for="pub">Chiave pubblica</label>
+                  <textarea id="pub" class="pem" rows="4" spellcheck="false" autocomplete="off" aria-label="Chiave pubblica PEM"></textarea>
+                </div>
+                <div class="field">
+                  <label for="priv">Chiave privata</label>
+                  <textarea id="priv" class="pem" rows="4" spellcheck="false" autocomplete="off" aria-label="Chiave privata PEM"></textarea>
+                </div>
+              </div>
+              <p class="hint" id="kid" hidden></p>
+              <p class="hint" id="sign-hint" hidden></p>
+              <p class="sizes num" id="sizes">Input 0 caratteri. Firma 0 byte.</p>
+              <div class="field sig-field">
+                <label for="sig-preview">Byte della firma</label>
+                <textarea id="sig-preview" class="sig-preview" readonly spellcheck="false" aria-label="Byte della firma"></textarea>
+              </div>
+              <div class="sign-actions">
+                <button type="button" class="btn" id="generate">Genera segreto</button>
+                <button type="button" class="btn ghost" id="clear-keys">Svuota chiavi</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/jwt.js"></script>
+  <script src="assets/crypto.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
