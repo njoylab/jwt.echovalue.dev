@@ -198,6 +198,10 @@ main { flex: 1; }
   letter-spacing: 0;
 }
 .navbar-brand:hover { color: var(--color-text-primary); }
+.navbar-brand .brand-product {
+  color: var(--ev-color-success);
+  font-weight: 500;
+}
 .theme-toggle {
   margin-left: auto;
   margin-right: 0.75rem;
